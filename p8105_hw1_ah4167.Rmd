@@ -5,11 +5,13 @@ date: "2023-09-14"
 output: github_document
 ---
 
+# Problem 1
+
 ```{r}
 library("moderndive")
 data("early_january_weather")
 ```
-# Description of the dataset:
+## Description of the dataset:
 
 * The dataset contains weather-related information of EWR for the year 2013, specifically for the month of January. The variables in this dataset including `r colnames(early_january_weather)`, their descriptions are:
 
@@ -46,3 +48,78 @@ data("early_january_weather")
 * The dataset has `r nrow(early_january_weather)` rows and `r ncol(early_january_weather)` columns.
 
 * The mean temperature is about `r round(mean(early_january_weather$temp),2)`.
+
+
+## A scatterplot of temp (y) vs time_hour (x):
+
+```{r}
+# Load the ggplot2 library
+library(ggplot2)
+
+# Create the scatterplot
+ggplot(early_january_weather, aes(x = hour, y = temp, color = humid)) +
+  geom_point() +
+  labs(x = "Time-Hour", y = "Temperature", color = "Humidity") +
+  theme_minimal()
+
+```
+
+In the scatterplot, we observe distinct temperature patterns throughout the day. During the late night hours, the temperature tends to be at its lowest point. As the morning unfolds and the sun rises, there is a noticeable increase in temperature. The peak of warmth typically occurs around noon, making it the hottest part of the day. Subsequently, as the day progresses, we see a gradual decline in temperature. There is no apparent pattern of humidity from this scatterplot.
+
+```{r}
+ggsave("A scatterplot of temp (y) vs time_hour (x).pdf")
+```
+
+# Problem 2
+
+## Create a data frame:
+
+
+提示：目前，要获取数据框中变量的平均值，您需要将变量从数据框中取出。尝试加载 tidyverse 并使用该pull函数。
+
+在某些情况下，您可以显式地将变量从一种类型转换为另一种类型。编写一个代码块，将函数应用于as.numeric 逻辑变量、字符变量和因子变量（请显示该块，但不要显示输出）。会发生什么，为什么？这是否有助于解释当您尝试取均值时会发生什么？
+
+```{r}
+library(tidyverse)
+df <- tibble(random_sample=rnorm(10),
+             logical_vector=random_sample>0,
+             character_vector=c("L","O","V","E","Y","O","U","!","!","!"),
+             factor_vector<- factor(
+               sample(c("Level1", "Level2", "Level3"), 10, replace = TRUE),
+               levels = c("Level1", "Level2", "Level3"))
+)
+```
+
+## Try to take the mean of each variable:
+
+```{r}
+mean(pull(df,random_sample))
+mean(pull(df,logical_vector))
+mean(pull(df,character_vector))
+mean(pull(df,`factor_vector <- ...` ))
+```
+We can get the means of random sample and the logical vector, but we failed in getting means of character vector and factor vector.
+
+## Apply the as.numeric function to the logical, character, and factor variables:
+
+```{r, echo=FALSE}
+as.numeric(pull(df,logical_vector))
+as.numeric(pull(df,character_vector))
+as.numeric(pull(df,`factor_vector <- ...` ))
+```
+
+When I convert a logical variable to numeric, TRUE becomes 1, and FALSE becomes 0. 
+
+When I convert a character variable to numeric, it becomes NA.
+
+When I convert a factor variable to numeric, R converts the levels of the factor to their underlying numeric representation. In this case, since the factor levels are "1", "2", and "3," they are converted to 1, 2, and 3, respectively.
+
+Regarding the mean, converting non-numeric variables to numeric using as.numeric can help explain what happens when I try to calculate the mean. When I attempt to calculate the mean of a variable that contains non-numeric values (e.g., characters or factors that cannot be converted to numbers), R returned NA, indicating that the mean cannot be computed due to non-numeric data. Converting such variables to numeric is one way to prepare them for numerical calculations, but I need to ensure that the data can be sensibly interpreted as numbers for the mean calculation to make sense.
+
+
+
+
+
+
+
+
