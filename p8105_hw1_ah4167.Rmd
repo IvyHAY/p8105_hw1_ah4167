@@ -1,0 +1,48 @@
+---
+title: "p8105_hw1_ah4167"
+author: "Aiying Huang"
+date: "2023-09-14"
+output: github_document
+---
+
+```{r}
+library("moderndive")
+data("early_january_weather")
+```
+# Description of the dataset:
+
+* The dataset contains weather-related information of EWR for the year 2013, specifically for the month of January. The variables in this dataset including `r colnames(early_january_weather)`, their descriptions are:
+
+1.origin: This variable is of `r typeof(early_january_weather$origin)` type, indicating the source from which the weather data originates. It appears to be a EWR airport.
+
+2.year: This variable represents the year of the data, which is 2013 in this case. All the data entries in this dataset are from the year 2013.
+
+3.month: The "month" variable denotes the month of the year, which is January in this dataset. The data seems to be limited to January 2013.
+
+4.day: This variable represents the day of the month, whose range is `r range(early_january_weather$day)`. It indicates the specific day within January 2013.
+
+5.hour: The "hour" variable represents the hour of the day, whose range is `r range(early_january_weather$hour)`. It specifies the time within each day.
+
+6.temp: This variable represents the temperature, likely in degrees Fahrenheit, with values ranging from a minimum of `r min(early_january_weather$temp)` to a maximum of `r max(early_january_weather$temp)`.
+
+7.dewp: The "dewp" variable is likely the dew point temperature, also in degrees Fahrenheit. It ranges from a minimum of `r min(early_january_weather$dewp)` to a maximum of `r max(early_january_weather$dewp)`.
+
+8.humid: This variable represents the humidity level, with values ranging from a minimum of `r min(early_january_weather$humid)` to a maximum of `r max(early_january_weather$humid)`.
+
+9.wind_dir: The "wind_dir" variable likely represents wind direction, measured in degrees. It ranges from `r min(early_january_weather$wind_dir,na.rm=T)` to `r max(early_january_weather$wind_dir,na.rm=T)`, indicating different wind directions. And there are missing values in this variable.
+
+10.wind_speed: This variable represents wind speed, likely measured in some relevant unit (e.g., miles per hour). It ranges from a minimum of `r min(early_january_weather$wind_speed)` to a maximum of `r max(early_january_weather$wind_speed)`.
+
+11.wind_gust: The "wind_gust" variable appears to be related to wind gust speed, with values ranging from a minimum of `r min(early_january_weather$wind_gust,na.rm=T)` to a maximum of `r max(early_january_weather$wind_gust,na.rm=T)`. And there are missing values in this variable.
+
+12.precip: This variable likely represents precipitation, possibly in inches or another relevant unit. It has a range from a minimum of `r min(early_january_weather$precip)` to a maximum of `r max(early_january_weather$precip)`.
+
+13.pressure: The "pressure" variable is likely atmospheric pressure, possibly in millibars or another relevant unit. It ranges from a minimum of `r min(early_january_weather$pressure,na.rm=T)` to a maximum of `r max(early_january_weather$pressure,na.rm=T)`. And there are missing values in this variable.
+
+14.visib: This variable represents visibility, which may be measured in miles or another unit. It includes a quartile statistic with a minimum of `r min(early_january_weather$visib)` and a maximum of `r max(early_january_weather$visib)`.
+
+15.time_hour: This variable seems to indicate the timestamp for each data point, likely in the format "YYYY-MM-DD HH:MM:SS.SS." It specifies the exact time and date of each observation.
+
+* The dataset has `r nrow(early_january_weather)` rows and `r ncol(early_january_weather)` columns.
+
+* The mean temperature is about `r round(mean(early_january_weather$temp),2)`.
